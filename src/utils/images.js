@@ -12,8 +12,8 @@ import image11 from "../assets/images/image-11.jpeg";
 
 const images = [
   {
-    id: 1,
-    src: image1,
+    id: 11,
+    src: image11,
   },
   {
     id: 2,
@@ -36,6 +36,10 @@ const images = [
     src: image6,
   },
   {
+    id: 1,
+    src: image1,
+  },
+  {
     id: 7,
     src: image7,
   },
@@ -50,10 +54,6 @@ const images = [
   {
     id: 10,
     src: image10,
-  },
-  {
-    id: 11,
-    src: image11,
   },
 ];
 
