@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./App.css";
 import images from "./utils/images";
 import { PiImage } from "react-icons/pi";
@@ -7,6 +7,18 @@ const App = () => {
   // State for image data and selected images
   const [imagesData, setImagesData] = useState(images);
   const [checkedImages, setCheckedImages] = useState([]);
+
+  // index of the dragItem/placeItem
+  const dragItem = useRef(null);
+  const placeDragItem = useRef(null);
+
+  // Handle dragItem/placeItem of an image
+  const handleSort = () => {
+    let newImagesData = [...imagesData];
+    let moveItem = newImagesData.splice(dragItem.current, 1)[0];
+    newImagesData.splice(placeDragItem.current, 0, moveItem);
+    setImagesData(newImagesData);
+  };
 
   // Handle checking/unchecking an image
   const handleCheckImage = (imgId) => {
@@ -51,8 +63,12 @@ const App = () => {
             className={`${
               index === 0 ? "col-span-2 row-span-2" : ""
             } rounded-lg relative group bg-white border border-slate-300`}
+            draggable
+            onDragStart={() => (dragItem.current = index)}
+            onDragEnter={() => (placeDragItem.current = index)}
+            onDragEnd={() => handleSort()}
           >
-            <img className=" rounded-lg" src={item.src} alt="image" />
+            <img className="rounded-lg" src={item.src} alt="galleryImage" />
 
             {checkedImages.includes(item.id) ? (
               <div className="bg-white bg-opacity-50 absolute inset-0  rounded-md">
@@ -63,7 +79,7 @@ const App = () => {
                 />
               </div>
             ) : (
-              <div className="bg-black bg-opacity-75 absolute inset-0 opacity-0 hover:opacity-60 transition-all duration-700 rounded-md">
+              <div className="bg-black bg-opacity-75 absolute inset-0 opacity-0 hover:opacity-60 transition-all duration-500 ease-in rounded-md">
                 <input
                   type="checkbox"
                   className="scale-125 rounded-md absolute left-3 md:left-6 top-3 md:top-6 z-10 hidden group-hover:block"
@@ -81,7 +97,7 @@ const App = () => {
             <PiImage size={24} />
             <p className="font-semibold text-xs md:text-base">Add Images</p>
           </div>
-          <input type="file" id="file"  hidden />
+          <input type="file" id="file" hidden />
         </label>
       </div>
     </div>
