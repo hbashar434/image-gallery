@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import images from "./utils/images";
+import { PiImage } from "react-icons/pi";
 
 const App = () => {
   // State for image data and selected images
@@ -29,20 +30,21 @@ const App = () => {
           <div className="flex justify-between">
             <div className="font-semibold md:font-bold flex gap-3">
               <input type="checkbox" checked className="scale-125 rounded-md" />
-              {checkedImages.length} Files Selected
+              {checkedImages.length}{" "}
+              {checkedImages.length === 1 ? "File" : "Files"} Selected
             </div>
             <button
               className="font-normal md:font-semibold text-red-600 hover:underline underline-offset-2"
               onClick={() => handleDeleteImages()}
             >
-              Delete files
+              Delete {checkedImages.length === 1 ? "file" : "files"}
             </button>
           </div>
         ) : (
           <p className="text-xl font-bold">Gallery</p>
         )}
       </div>
-      <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 p-6 lg:p-12">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-6 lg:p-12">
         {imagesData.map((item, index) => (
           <div
             key={item.id}
@@ -53,7 +55,7 @@ const App = () => {
             <img className=" rounded-lg" src={item.src} alt="image" />
 
             {checkedImages.includes(item.id) ? (
-              <div className="bg-white bg-opacity-40 absolute inset-0  rounded-md">
+              <div className="bg-white bg-opacity-50 absolute inset-0  rounded-md">
                 <input
                   type="checkbox"
                   className="scale-125 rounded-md absolute left-3 md:left-6 top-3 md:top-6 z-10"
@@ -61,7 +63,7 @@ const App = () => {
                 />
               </div>
             ) : (
-              <div className="bg-black bg-opacity-75 absolute inset-0 opacity-0 hover:opacity-60 transition-opacity duration-300 rounded-md">
+              <div className="bg-black bg-opacity-75 absolute inset-0 opacity-0 hover:opacity-60 transition-all duration-700 rounded-md">
                 <input
                   type="checkbox"
                   className="scale-125 rounded-md absolute left-3 md:left-6 top-3 md:top-6 z-10 hidden group-hover:block"
@@ -71,6 +73,16 @@ const App = () => {
             )}
           </div>
         ))}
+        <label
+          htmlFor="file"
+          className=" bg-gray-100 border-4 border-dotted border-gray-300 rounded-lg flex flex-col justify-center items-center p-4"
+        >
+          <div className="flex flex-col justify-center items-center gap-3">
+            <PiImage size={24} />
+            <p className="font-semibold text-xs md:text-base">Add Images</p>
+          </div>
+          <input type="file" id="file"  hidden />
+        </label>
       </div>
     </div>
   );
