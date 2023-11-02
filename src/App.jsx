@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import "./App.css";
 import images from "./utils/images";
 import { PiImage } from "react-icons/pi";
+import ThemeToggler from "./utils/ThemeToggler";
 
 const App = () => {
   // State for image data and selected images
@@ -36,24 +37,33 @@ const App = () => {
   };
 
   return (
-    <div className="bg-white shadow-md mx-4 lg:mx-12 rounded-md">
-      <div className=" h-16 py-6 px-6 lg:px-12 border-b border-slate-300">
+    <div className="my-bg-primary shadow-md mx-4 lg:mx-12 rounded-md">
+      <div className=" h-16 py-6 px-6 lg:px-12 border-b border-slate-300 relative">
+        <div className="absolute inset-x-[50%] bottom-4 md:bottom-1">
+          <ThemeToggler />
+        </div>
         {checkedImages.length > 0 ? (
           <div className="flex justify-between">
-            <div className="font-semibold md:font-bold flex gap-3">
-              <input type="checkbox" checked className="scale-125 rounded-md" />
-              {checkedImages.length}{" "}
-              {checkedImages.length === 1 ? "File" : "Files"} Selected
+            <div className="my-text-primary text-xs  md:text-lg font-semibold md:font-bold flex items-center gap-1 md:gap-3">
+              <input
+                type="checkbox"
+                checked
+                className="md:scale-125 rounded-md"
+              />
+              <p>
+                {checkedImages.length}{" "}
+                {checkedImages.length === 1 ? "File" : "Files"} Selected
+              </p>
             </div>
             <button
-              className="font-normal md:font-semibold text-red-600 hover:underline underline-offset-2"
+              className="text-xs md:text-lg font-normal md:font-semibold text-red-600 hover:underline underline-offset-2"
               onClick={() => handleDeleteImages()}
             >
               Delete {checkedImages.length === 1 ? "file" : "files"}
             </button>
           </div>
         ) : (
-          <p className="text-xl font-bold">Gallery</p>
+          <p className="my-text-primary text-2xl font-bold">Gallery</p>
         )}
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-6 lg:p-12">
@@ -95,7 +105,9 @@ const App = () => {
         >
           <div className="flex flex-col justify-center items-center gap-3">
             <PiImage size={24} />
-            <p className="font-semibold text-xs md:text-base">Add Images</p>
+            <p className="text-gray-700 font-semibold text-xs md:text-base">
+              Add Images
+            </p>
           </div>
           <input type="file" id="file" hidden />
         </label>
