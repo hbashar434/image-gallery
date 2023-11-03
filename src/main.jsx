@@ -6,7 +6,7 @@ import "./index.css";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <div className="h-full w-full">
-      <div className="py-12 lg:py-24 max-w-[1440px]">
+      <div className="py-12 lg:py-24 max-w-[1440px] mx-auto">
         <App />
       </div>
     </div>

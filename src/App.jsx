@@ -70,14 +70,12 @@ const App = () => {
           <p className="my-text-primary text-2xl font-bold">Gallery</p>
         )}
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-6 lg:p-12 justify-center items-center">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-6 lg:p-12">
         {imagesData.map((item, index) => (
           <div
             key={item.id}
             className={`${
-              index === 0
-                ? "col-span-2 row-span-2"
-                : "min-w-[110px] min-h-[110px] md:max-w-[217px] md:max-h-[217px]"
+              index === 0 ? "col-span-2 row-span-2" : ""
             } rounded-lg relative group bg-white border border-slate-300 overflow-hidden`}
             draggable
             onDragStart={() => {

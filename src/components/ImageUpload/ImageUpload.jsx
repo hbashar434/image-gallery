@@ -19,7 +19,7 @@ const ImageUpload = ({ imagesData, setImagesData }) => {
   return (
     <label
       htmlFor="file"
-      className=" bg-gray-100 border-4 border-dotted border-gray-300 rounded-lg flex flex-col justify-center items-center p-4 h-full w-full min-h-[110px] min-w-[110px]  md:min-h-[217px] md:min-w-[217px]"
+      className=" bg-gray-100 border-4 border-dotted border-gray-300 rounded-lg flex flex-col justify-center items-center p-4 h-full w-full"
     >
       <div className="flex flex-col justify-center items-center gap-3">
         <PiImage size={24} />
