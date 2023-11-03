@@ -3,11 +3,15 @@ import "./App.css";
 import images from "./utils/images";
 import { PiImage } from "react-icons/pi";
 import ThemeToggler from "./utils/ThemeToggler";
+import { v4 as uuidv4 } from "uuid";
 
 const App = () => {
   // State for image data and selected images
   const [imagesData, setImagesData] = useState(images);
   const [checkedImages, setCheckedImages] = useState([]);
+  const [isDragging, setIsDragging] = useState(false);
+
+  console.log(imagesData);
 
   // index of the dragItem/placeItem
   const dragItem = useRef(null);
@@ -36,6 +40,19 @@ const App = () => {
     setCheckedImages([]);
   };
 
+  // Handle image upload
+  const handleImageUpload = (event) => {
+    const uploadedFile = event.target.files[0];
+    if (uploadedFile) {
+      const newImageId = uuidv4();
+      const newImageData = {
+        id: newImageId,
+        src: URL.createObjectURL(uploadedFile),
+      };
+      setImagesData([...imagesData, newImageData]);
+    }
+  };
+
   return (
     <div className="my-bg-primary shadow-md mx-4 lg:mx-12 rounded-md">
       <div className=" h-16 py-6 px-6 lg:px-12 border-b border-slate-300 relative">
@@ -48,6 +65,7 @@ const App = () => {
               <input
                 type="checkbox"
                 checked
+                readOnly
                 className="md:scale-125 rounded-md"
               />
               <p>
@@ -74,13 +92,38 @@ const App = () => {
               index === 0 ? "col-span-2 row-span-2" : ""
             } rounded-lg relative group bg-white border border-slate-300`}
             draggable
-            onDragStart={() => (dragItem.current = index)}
+            onDragStart={() => {
+              setIsDragging(true);
+              dragItem.current = index;
+            }}
             onDragEnter={() => (placeDragItem.current = index)}
-            onDragEnd={() => handleSort()}
+            onDragEnd={() => {
+              setIsDragging(false);
+              handleSort();
+            }}
           >
             <img className="rounded-lg" src={item.src} alt="galleryImage" />
 
-            {checkedImages.includes(item.id) ? (
+            {/* TODO: Need to modified dragging  */}
+            {/* {checkedImages.includes(item.id) ? (
+              <div className="bg-white bg-opacity-50 absolute inset-0  rounded-md">
+                <input
+                  type="checkbox"
+                  className="scale-125 rounded-md absolute left-3 md:left-6 top-3 md:top-6 z-10"
+                  onChange={() => handleCheckImage(item.id)}
+                />
+              </div>
+            ) : (
+              <div className="bg-black bg-opacity-75 absolute inset-0 opacity-0 hover:opacity-60 transition-all duration-500 ease-in rounded-md">
+                <input
+                  type="checkbox"
+                  className="scale-125 rounded-md absolute left-3 md:left-6 top-3 md:top-6 z-10 hidden group-hover:block"
+                  onChange={() => handleCheckImage(item.id)}
+                />
+              </div>
+            )} */}
+
+            {isDragging ? null : checkedImages.includes(item.id) ? (
               <div className="bg-white bg-opacity-50 absolute inset-0  rounded-md">
                 <input
                   type="checkbox"
@@ -101,7 +144,7 @@ const App = () => {
         ))}
         <label
           htmlFor="file"
-          className=" bg-gray-100 border-4 border-dotted border-gray-300 rounded-lg flex flex-col justify-center items-center p-4"
+          className=" bg-gray-100 border-4 border-dotted border-gray-300 rounded-lg flex flex-col justify-center items-center p-4 h-full w-full min-h-[110px] min-w-[110px]  md:min-h-[217px] md:min-w-[217px]"
         >
           <div className="flex flex-col justify-center items-center gap-3">
             <PiImage size={24} />
@@ -109,7 +152,7 @@ const App = () => {
               Add Images
             </p>
           </div>
-          <input type="file" id="file" hidden />
+          <input type="file" id="file" hidden onChange={handleImageUpload} />
         </label>
       </div>
     </div>
