@@ -10,8 +10,6 @@ const App = () => {
   const [checkedImages, setCheckedImages] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
 
-  console.log(imagesData);
-
   // index of the dragItem/placeItem
   const dragItem = useRef(null);
   const placeDragItem = useRef(null);
