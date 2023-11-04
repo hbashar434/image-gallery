@@ -41,7 +41,7 @@ const App = () => {
 
   return (
     <div className="my-bg-primary shadow-md mx-4 lg:mx-12 rounded-md relative">
-      <div className="absolute left-1/2 top-3">
+      <div className="absolute left-1/2 top-5 md:top-3">
         <ThemeToggler />
       </div>
       <div className=" h-16 py-6 px-6 lg:px-12 border-b border-slate-300">
